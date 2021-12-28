@@ -19,18 +19,6 @@ Bot=commands.Bot(command_prefix="-")
 DiscordComponents(Bot)
 image=discord.File("test.png")
 
-# Importing and operations to use BSE stocks details in CSV file
-# with open("Select.csv") as file:
-#     csv_reader=csv.reader(file)
-#     df=pd.DataFrame([csv_reader], index=None)
-
-# column_name=[]
-# for x in df[0]:
-#     for val in x:
-#         column_name.append(val)
-
-# csv_file=pd.read_csv("Select.csv", header=None, names=column_name, index_col=column_name)
-
 @Bot.event
 async def on_ready():
   print("Logged in as {0.user}".format(Bot))
