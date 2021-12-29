@@ -1,7 +1,5 @@
 import discord
 import pandas as pd
-import matplotlib.pyplot as plt
-import datetime
 import quandl
 import csv
 
@@ -13,8 +11,7 @@ from cogs.details_fun import column_name
 
 # Keys and Global variables
 load_dotenv()
-API_key= os.getenv('QUANDL_KEY')
-quandl.ApiConfig.api_key=API_key
+
 Bot=commands.Bot(command_prefix="-")
 DiscordComponents(Bot)
 image=discord.File("test.png")

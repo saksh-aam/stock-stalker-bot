@@ -48,14 +48,14 @@ def generalfn3(arg):
     datafile.close()
 
 
-class functions(commands.Cog):
+class callData(commands.Cog):
     def __init__(self, Bot):
         self.Bot=Bot
 
 # Event
     @commands.Cog.listener()
     async def on_ready(self):
-        print("Bot is online")
+        print("Details Functions file running")
 
 # Basic Commands
     @commands.command()
@@ -153,4 +153,4 @@ class functions(commands.Cog):
         await ctx.send(f'All the stocks in {arg} Industries are there in the file!', file=discord.File("./cogs/sampledata.csv"))
     
 def setup(Bot):
-    Bot.add_cog(functions(Bot))
+    Bot.add_cog(callData(Bot))
