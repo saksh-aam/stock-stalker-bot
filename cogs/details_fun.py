@@ -124,7 +124,7 @@ class callData(commands.Cog):
 
         result=[]
         for x, y in zip(column_name, details):
-            result.append(f"`{x} : {y}`")
+            result.append(f"{x} : {y}")
         await ctx.send("\n".join(result))
 
     @commands.command()
@@ -152,5 +152,6 @@ class callData(commands.Cog):
         generalFn2(arg)
         await ctx.send(f'All the stocks in {arg} Industries are there in the file!', file=discord.File("./datafiles/sampledata.csv"))
     
+
 def setup(Bot):
     Bot.add_cog(callData(Bot))

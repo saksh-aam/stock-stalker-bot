@@ -1,8 +1,4 @@
 import discord
-import pandas as pd
-import quandl
-import csv
-
 from discord.ext import commands
 from discord_components import DiscordComponents, Select, SelectOption
 import os
@@ -54,7 +50,7 @@ async def helper(ctx):
         await interaction.send("To get started you got to be ready with **Security Ids** of stocks! \n\n"
         "**Stocks specific details**:\n"
         f"{', '.join(column_name)}\n\n"
-        "`For e.g- $Detail ABB issuer-name`\n\n"
+        "`For e.g- $issuename ABB `\n\n"
         
         "**Aggregate details**:\n"
         "Complete Detail of stock\n"
@@ -76,10 +72,13 @@ async def helper(ctx):
         "% Deli. Qty to Traded Qty\n"
         "Daily percentage Change in price\n"
         "Cumulative returns from the Day you bought\n\n"
+        "`For e.g- $candles 500002 23/8/21`"
         "**Indices**\n"
         "Indices Code using `indices` command\n"
         "Index Price Action- Candles\n\n"
-        "Type in `-help` to know the syntax/ command",
+        "Type in `-help` to know the syntax/ command\n"
+        "For the charts with Secuirty Code you need to specify the starting date\n"
+        "Cherry on the Cake- for the candles yo can also pass the Moving Average (Default=2)",
         )
 
     except discord.NotFound:
@@ -97,6 +96,15 @@ async def unload(ctx, extension):
 for dirfile in os.listdir("./cogs"):
   if(dirfile.endswith('.py')):
     Bot.load_extension(f'cogs.{dirfile[:-3]}')
+
+
+@Bot.event
+async def on_command_error(ctx, error):
+  if isinstance(error, commands.MissingRequiredArgument):
+    await ctx.send("Missing Required argument")
+
+  elif isinstance(error, commands.CommandNotFound):
+    await ctx.send("Not Trained for that command :(")
 
 Bot.run(os.getenv('BOT_TOKEN'))
 

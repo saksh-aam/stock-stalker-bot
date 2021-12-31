@@ -32,7 +32,7 @@ class callCharts(commands.Cog):
         await ctx.send(file=image)
 
     @commands.command()
-    async def candles(self, ctx, arg, datee, mavg=10):
+    async def stockcandle(self, ctx, arg, datee, mavg=2):
         image=discord.File("test.png")
         result=quandl.get(f'BSE/BOM{arg}', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         # result['Date']=result.index
@@ -114,14 +114,14 @@ class callCharts(commands.Cog):
         plt.savefig("test.png")
         plt.close()
         cumreturns=result['Cumulative'].iloc[-1]
-        await ctx.send(f'You got {cumreturns}% of returns since {datee} from {arg}',  file=image)
+        await ctx.send(f'You got {cumreturns:.2f}% of returns since {datee} from {arg}',  file=image)
 
     @commands.command()
     async def indices(self, ctx):
         await ctx.send(file=discord.File("./datafiles/indices.csv"))
 
     @commands.command()
-    async def indicescandles(self, ctx, code, datee, mavg=10):
+    async def indexcandle(self, ctx, code, datee, mavg=2):
         image=discord.File("test.png")
         result=quandl.get(f'BSE/{code}', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         
