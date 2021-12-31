@@ -32,11 +32,10 @@ class callCharts(commands.Cog):
         await ctx.send(file=image)
 
     @commands.command()
-    async def candles(self, ctx, arg, datee, mavg=50):
+    async def candles(self, ctx, arg, datee, mavg=10):
         image=discord.File("test.png")
         result=quandl.get(f'BSE/BOM{arg}', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        result['Date']=result.index
-        # result=result[['Date', 'Open', 'High', 'Low', 'Close', 'WAP']]
+        # result['Date']=result.index
         mplfinance.plot(result, type='candle', style='charles', mav= mavg, ylabel='Price', savefig="test.png")  
 
         await ctx.send(file=image)
@@ -56,6 +55,7 @@ class callCharts(commands.Cog):
         axis[1].bar(trades['Date'], trades['No. of Trades'])
         axis[1].set_title("Number of trades occured")
         plt.tight_layout(1)
+        plt.xticks(rotation=25)
         plt.savefig("test.png")
         plt.close()
         await ctx.send(file=image)
@@ -77,9 +77,57 @@ class callCharts(commands.Cog):
         axis[1].set_title("% Delivery Qty to Traded Qty")
 
         plt.tight_layout(1)
+        plt.xticks(rotation=25)
         plt.savefig("test.png")
         plt.close()
         await ctx.send(file=image)
+
+    @commands.command()
+    async def dailyperchange(self, ctx, arg, datee):
+        image=discord.File("test.png")
+        result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+        # result=result['Close']/result['Close'].shift(1) -1
+        result.reset_index(level=['Date'], inplace=True)
+        result['Return']=result['Close'].pct_change(1)
+
+        fig, axis=plt.subplots(2)
+        axis[0].bar(result['Date'], result['Return'])
+        axis[0].set_title("Daily percentage change Bar-graph")
+
+        axis[1].hist(result['Return'], bins=100)
+        axis[1].set_title("Histogram")
+
+        plt.tight_layout(1)
+        plt.xticks(rotation=25)
+        plt.savefig("test.png")
+        plt.close()
+        await ctx.send("Letz check the votality of stock!",file=image)
+
+    @commands.command()
+    async def cumulativereturn(self, ctx, arg, datee):
+        image=discord.File("test.png")
+        result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+        result['Return']=result['Close'].pct_change(1)
+        result['Cumulative']=(1+result['Return']).cumprod()
+        plt.plot(result['Cumulative'])
+        plt.xticks(rotation=25)
+        plt.savefig("test.png")
+        plt.close()
+        cumreturns=result['Cumulative'].iloc[-1]
+        await ctx.send(f'You got {cumreturns}% of returns since {datee} from {arg}',  file=image)
+
+    @commands.command()
+    async def indices(self, ctx):
+        await ctx.send(file=discord.File("./datafiles/indices.csv"))
+
+    @commands.command()
+    async def indicescandles(self, ctx, code, datee, mavg=10):
+        image=discord.File("test.png")
+        result=quandl.get(f'BSE/{code}', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+        
+        mplfinance.plot(result, type='candle', style='charles', mav= mavg, ylabel='Price', savefig="test.png")  
+        await ctx.send(file=image)
+
 
 
 def setup(Bot):

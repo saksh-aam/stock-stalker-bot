@@ -26,18 +26,18 @@ async def ping(ctx):
 
 @Bot.command()
 async def helper(ctx):
-  await ctx.send(
+  await ctx.send("All the commands are divivded into two groups\n"
     "Select the button to get the help respectively",
     components=[
       Select(
       placeholder="Choose",
       options=[
         SelectOption(
-          label="Specific Stock",
+          label="Stocks & Sectors",
           value="StockDetails",
         ),
         SelectOption(
-          label="Timeseries",
+          label="Timeseries & Charts",
           value="Charts",
         ),
       ],
@@ -51,21 +51,36 @@ async def helper(ctx):
       # await interaction.send(content=f'{interaction.custom_id} clicked', ephemeral=False)
 
       if(interaction.values[0]=="StockDetails"):
-        await interaction.send("Stock-Helper helps you get the following information about the stock from BSE stocks database!\n\n"
-        "Specific:\n"
+        await interaction.send("To get started you got to be ready with **Security Ids** of stocks! \n\n"
+        "**Stocks specific details**:\n"
         f"{', '.join(column_name)}\n\n"
-        "For e.g- $Detail ABB issuer-name\n"
-        "To exract the above Infromation use 'Security Name' for the stock. Look at the example below:\n\n"
-        "Aggregate:\n"
-        "`'Complete' Detail\n`"
-        "List of 'Sectors'\n"
-        "List of 'Igroup' Name\n"
-        "List of 'Isubgroup' Name\n"
-        "All 'Sector-companies' in particular sector\n",
+        "`For e.g- $Detail ABB issuer-name`\n\n"
+        
+        "**Aggregate details**:\n"
+        "Complete Detail of stock\n"
+        "List of Sectors\n"
+        "List of Igroup Name\n"
+        "List of Isubgroup Name\n"
+        "All the companies in particular sector\n\n"
+        "Type in `-help` to know the syntax/ command",
         ephemeral=False)
         
       elif(interaction.values[0]=="Charts"):
-        await interaction.send(interaction.values[0], ephemeral=False)
+        await interaction.send("**Lets Visualise**\n"
+        "To get started you got to be ready with **Security Codes** of stocks!\n"
+        "You can easily get the Id using `-securitycode security_id` command\n\n"
+        "**Stock Charts**\n"
+        "Price Action chart- Line Graph\n"
+        "Price Action chart- Candles Graph\n"
+        "Volumn in Daily Timeframe\n"
+        "% Deli. Qty to Traded Qty\n"
+        "Daily percentage Change in price\n"
+        "Cumulative returns from the Day you bought\n\n"
+        "**Indices**\n"
+        "Indices Code using `indices` command\n"
+        "Index Price Action- Candles\n\n"
+        "Type in `-help` to know the syntax/ command",
+        )
 
     except discord.NotFound:
       ctx.send("error")
@@ -84,3 +99,4 @@ for dirfile in os.listdir("./cogs"):
     Bot.load_extension(f'cogs.{dirfile[:-3]}')
 
 Bot.run(os.getenv('BOT_TOKEN'))
+
