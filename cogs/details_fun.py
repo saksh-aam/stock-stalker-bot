@@ -4,7 +4,7 @@ import pandas as pd
 from discord.ext import commands
 
 # Importing and operations to use BSE stocks details in CSV file
-with open("./cogs/Select.csv") as file:
+with open("./datafiles/Select.csv") as file:
     csv_reader=csv.reader(file)
     df=pd.DataFrame([csv_reader], index=None)
 
@@ -13,7 +13,7 @@ for x in df[0]:
     for val in x:
         column_name.append(val)
 
-csv_file=pd.read_csv("./cogs/Select.csv", header=None, names=column_name)
+csv_file=pd.read_csv("./datafiles/Select.csv", header=None, names=column_name)
 
 def generalFn1(arg, col1):
     arg=arg.upper()
@@ -23,7 +23,7 @@ def generalFn1(arg, col1):
 
 def generalFn2(arg):
     arg=arg.replace("-", " ")
-    with open("./cogs/sampledata.csv", "w+") as datafile:
+    with open("./datafiles/sampledata.csv", "w+") as datafile:
         csv_writer=csv.writer(datafile)
         csv_writer.writerow(column_name)
 
@@ -42,7 +42,7 @@ def generalFn2(arg):
 def generalfn3(arg):
     setSi=set(csv_file['Industry'])
     arg=arg.replace("-", " ")
-    with open("./cogs/sampledata.csv", "w+") as datafile:
+    with open("./datafiles/sampledata.csv", "w+") as datafile:
         csv_writer=csv.writer(datafile)
         csv_writer.writerow(setSi)
     datafile.close()
@@ -130,27 +130,27 @@ class callData(commands.Cog):
     @commands.command()
     async def industries(self, ctx):
         generalfn3('Industry')
-        await ctx.send(f'All the Industry are there in the file!', file=discord.File("./cogs/sampledata.csv"))
+        await ctx.send(f'All the Industry are there in the file!', file=discord.File("./datafiles/sampledata.csv"))
 
     @commands.command()
     async def sectors(self, ctx):
         generalfn3('Sector Name')
-        await ctx.send(f'All the Sectors are there in the file!', file=discord.File("./cogs/sampledata.csv"))
+        await ctx.send(f'All the Sectors are there in the file!', file=discord.File("./datafiles/sampledata.csv"))
 
     @commands.command()
     async def igroups(self, ctx):
         generalfn3('Igroup Name')
-        await ctx.send(f'All the Igroup are there in the file!', file=discord.File("./cogs/sampledata.csv"))
+        await ctx.send(f'All the Igroup are there in the file!', file=discord.File("./datafiles/sampledata.csv"))
 
     @commands.command()
     async def igroups(self, ctx):
         generalfn3('ISubgroup Name')
-        await ctx.send(f'All the ISubgroup are there in the file!', file=discord.File("./cogs/sampledata.csv"))
+        await ctx.send(f'All the ISubgroup are there in the file!', file=discord.File("./datafiles/sampledata.csv"))
 
     @commands.command()
     async def industryallstocks(self, ctx, arg):
         generalFn2(arg)
-        await ctx.send(f'All the stocks in {arg} Industries are there in the file!', file=discord.File("./cogs/sampledata.csv"))
+        await ctx.send(f'All the stocks in {arg} Industries are there in the file!', file=discord.File("./datafiles/sampledata.csv"))
     
 def setup(Bot):
     Bot.add_cog(callData(Bot))
