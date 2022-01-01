@@ -1,1 +1,1 @@
-# Discord-Bot-Stock-Helper
+# Discord-Bot-Stock-Stalker
