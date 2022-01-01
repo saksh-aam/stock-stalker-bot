@@ -10,7 +10,7 @@ load_dotenv()
 
 Bot=commands.Bot(command_prefix="-")
 DiscordComponents(Bot)
-image=discord.File("test.png")
+image=discord.File("./datafiles/test.png")
 
 @Bot.event
 async def on_ready():
