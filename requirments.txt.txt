@@ -1,0 +1,10 @@
+discord
+discord_components
+csv
+pandas
+os
+dotenv
+quandl
+mplfinance
+matplotlib.pyplot
+datetime
