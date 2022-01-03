@@ -1,12 +1,16 @@
 git+https://github.com/Rapptz/discord.py
+csv
 discord  
 discord-buttons  
 discord-components  
 discord-select-menus  
 discord.py  
+dotenv
+datetime
 matplotlib   
 mplfinance  
-mypy-extensions   
+mypy-extensions  
+os 
 pandas  
 pandas-datareader 
 pipenv  
