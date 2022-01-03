@@ -5,7 +5,7 @@ discord-buttons
 discord-components  
 discord-select-menus  
 discord.py  
-dotenv
+python-dotenv
 datetime
 matplotlib   
 mplfinance  
