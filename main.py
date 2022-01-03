@@ -16,10 +16,6 @@ async def on_ready():
 @Bot.command()
 async def ping(ctx):
   await ctx.send(f'Pong {round(Bot.latency*1000)}ms')
-
-@Bot.command()
-async def helpdetails(ctx):
-      await ctx.send("For stocks details you got to be ready with **Security Ids** of stocks! \n\n")
     
 @Bot.command()
 async def helpdetials(ctx):
