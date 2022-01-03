@@ -5,7 +5,7 @@ import os
 from cogs.details_fun import column_name
 
 # Keys and Global variables
-Bot=commands.Bot(command_prefix="!rs")
+Bot=commands.Bot(command_prefix="rs-")
 DiscordComponents(Bot)
 image=discord.File("./datafiles/test.png")
 
