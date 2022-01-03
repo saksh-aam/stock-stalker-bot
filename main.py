@@ -23,7 +23,6 @@ async def helpdetails(ctx):
       "**Stocks specific details**:\n"
       f"{', '.join(column_name)}\n\n"
       "`For e.g- $issuename ABB `\n\n"
-
       "**Aggregate details**:\n"
       "Complete Detail of stock\n"
       "List of Sectors\n"
