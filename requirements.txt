@@ -1,5 +1,5 @@
 git+https://github.com/Rapptz/discord.py
-csv
+python-csv
 discord  
 discord-buttons  
 discord-components  
