@@ -2,12 +2,9 @@ import discord
 from discord.ext import commands
 from discord_components import DiscordComponents, Select, SelectOption
 import os
-from dotenv import load_dotenv
 from cogs.details_fun import column_name
 
 # Keys and Global variables
-load_dotenv()
-
 Bot=commands.Bot(command_prefix="-")
 DiscordComponents(Bot)
 image=discord.File("./datafiles/test.png")
@@ -106,5 +103,5 @@ async def on_command_error(ctx, error):
   elif isinstance(error, commands.CommandNotFound):
     await ctx.send("Not Trained for that command :(")
 
-Bot.run(os.getenv('BOT_TOKEN'))
+Bot.run(os.environ.get('BOT_TOKEN'))
 
