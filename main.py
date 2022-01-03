@@ -40,7 +40,7 @@ async def helper(ctx):
 
   while True:
     try:
-      interaction= await Bot.wait_for("Select_option")
+      interaction= await Bot.wait_for("select_option")
       # await interaction.send(content=f'{interaction.custom_id} clicked', ephemeral=False)
 
       if(interaction.values[0]=="StockDetails"):
