@@ -76,6 +76,7 @@ async def helper(ctx):
         "Type in `-help` to know the syntax/ command\n"
         "For the charts with Secuirty Code you need to specify the starting date\n"
         "Cherry on the Cake- for the candles yo can also pass the Moving Average (Default=2)",
+         ephemeral=False
         )
 
     except discord.NotFound:
