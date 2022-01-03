@@ -19,18 +19,7 @@ async def ping(ctx):
 
 @Bot.command()
 async def helpdetails(ctx):
-      await ctx.send("For stocks details you got to be ready with **Security Ids** of stocks! \n\n"
-      "**Stocks specific details**:\n"
-      f"{', '.join(column_name)}\n\n"
-      "`For e.g- $issuename ABB `\n\n"
-      "**Aggregate details**:\n"
-      "Complete Detail of stock\n"
-      "List of Sectors\n"
-      "List of Igroup Name\n"
-      "List of Isubgroup Name\n"
-      "All the companies in particular sector\n\n"
-      "Type in `-help` to know the syntax/ command",
-      ephemeral=False)
+      await ctx.send("For stocks details you got to be ready with **Security Ids** of stocks! \n\n")
     
 @Bot.command()
 async def helpcharts(ctx):
@@ -51,7 +40,6 @@ async def helpcharts(ctx):
       "Type in `-help` to know the syntax/ command\n"
       "For the charts with Secuirty Code you need to specify the starting date\n"
       "Cherry on the Cake- for the candles yo can also pass the Moving Average (Default=2)",
-       ephemeral=False
       )
 
 @Bot.command()
