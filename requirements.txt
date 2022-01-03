@@ -10,7 +10,6 @@ datetime
 matplotlib   
 mplfinance  
 mypy-extensions  
-os 
 pandas  
 pandas-datareader 
 pipenv  
