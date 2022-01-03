@@ -6,10 +6,8 @@ import os
 from datetime import *
 import matplotlib.pyplot as plt
 import mplfinance
-from dotenv import load_dotenv
 
-load_dotenv()
-quandl.ApiConfig.api_key=os.getenv('QUANDL_KEY')
+quandl.ApiConfig.api_key=os.environ.get('QUANDL_KEY')
 format_date="%d/%m/%y"
 
 class callCharts(commands.Cog):
