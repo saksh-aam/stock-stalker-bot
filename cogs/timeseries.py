@@ -48,10 +48,10 @@ class callCharts(commands.Cog):
 
         fig, axis=plt.subplots(2)
         axis[0].bar(shares['Date'], shares['No. of Shares'])
-        axis[0].set_title("Number of Shares traded")
+        axis[0].set_title.set_text("Number of Shares traded")
 
         axis[1].bar(trades['Date'], trades['No. of Trades'])
-        axis[1].set_title("Number of trades occured")
+        axis[1].set_title.set_text("Number of trades occured")
         plt.subplot_tool()
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
@@ -90,10 +90,10 @@ class callCharts(commands.Cog):
 
         fig, axis=plt.subplots(2)
         axis[0].bar(result['Date'], result['Return'])
-        axis[0].set_title("Daily percentage change Bar-graph")
+        axis[0].set_title.set_text("Daily percentage change Bar-graph")
 
         axis[1].hist(result['Return'], bins=100)
-        axis[1].set_title("Histogram")
+        axis[1].set_title.set_text("Histogram")
 
         plt.tight_layout(1)
         plt.xticks(rotation=25)
