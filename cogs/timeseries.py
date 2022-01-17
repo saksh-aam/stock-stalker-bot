@@ -20,17 +20,14 @@ class callCharts(commands.Cog):
         print("Timeseries Functions file running")
 
 #commands
-    @commands.command()
-    async def chart(self, ctx, arg, datee):
-        image=discord.File("./datafiles/test.png")
-        result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        plt.plot(result)
-        plt.savefig("./datafiles/test.png")
-        plt.close()
-        result['Return']=result['Close'].pct_change(1)
-        result['Cumulative']=(1+result['Return']).cumprod()
-        cumreturns=result['Cumulative'].iloc[-1]
-        await ctx.send(f'You got {cumreturns:.2f}% of returns since {datee} from {arg}', file=image)
+#     @commands.command()
+#     async def chart(self, ctx, arg, datee):
+#         image=discord.File("./datafiles/test.png")
+#         result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+#         plt.plot(result)
+#         plt.savefig("./datafiles/test.png")
+#         plt.close()
+#         await ctx.send(file=image)
 
     @commands.command()
     async def stockcandle(self, ctx, arg, datee, mavg=2):
@@ -40,56 +37,71 @@ class callCharts(commands.Cog):
         mplfinance.plot(result, type='candle', style='charles', mav= mavg, ylabel='Price', savefig="./datafiles/test.png")  
 
         await ctx.send(file=image)
+        
+#below commented code is working on localhost but not after deployment to Heroku app, checked on net but solid solution was found 
+        
+#     @commands.command()
+#     async def volume(self, ctx, arg, datee):
+#         image=discord.File("./datafiles/test.png")
+#         shares=quandl.get(f'BSE/BOM{arg}.6', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+#         shares.reset_index(level=['Date'], inplace=True)
+#         trades=quandl.get(f'BSE/BOM{arg}.7', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+#         trades.reset_index(level=['Date'], inplace=True)
 
-    @commands.command()
-    async def volumeshares(self, ctx, arg, datee):
-        image=discord.File("./datafiles/test.png")
-        shares=quandl.get(f'BSE/BOM{arg}.6', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        shares.reset_index(level=['Date'], inplace=True)
+#         fig, axis=plt.subplots(2)
+#         axis[0].bar(shares['Date'], shares['No. of Shares'])
+#         axis[0].set_title("Number of Shares traded")
 
-        plt.bar(shares['Date'], shares['No. of Shares'])
-        plt.set_title("Number of Shares traded")
-        plt.xticks(rotation=25)
-        plt.savefig("./datafiles/test.png")
-        await ctx.send("Plot of number of {arg} Shares Traded per day from {datee} till date:",file=image)
+#         axis[1].bar(trades['Date'], trades['No. of Trades'])
+#         axis[1].set_title("Number of trades occured")
+#         plt.tight_layout(1)
+#         plt.xticks(rotation=25)
+#         plt.savefig("./datafiles/test.png")
+#         plt.close()
+#         await ctx.send(file=image)
         
-    @commands.command()
-    async def perdelivery(self, ctx, arg, datee):
-        image=discord.File("./datafiles/test.png")
-        delivery=quandl.get(f'BSE/BOM{arg}.10', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        delivery.reset_index(level=['Date'], inplace=True)
-        
-        plt.bar(delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
-        plt.set_title("% Delivery Qty to Traded Qty")
-        plt.xticks(rotation=25)
-        plt.savefig("./datafiles/test2.png")
-        await ctx.send(file=image)
-    
-    @commands.command()
-    async def numtrades(self, ctx, arg, datee):
-        image=discord.File("./datafiles.test.png")
-        trades=quandl.get(f'BSE/BOM{arg}.7', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        trades.reset_index(level=['Date'], inplace=True)
-        
-        plt.bar(trades['Date'], trades['No. of Trades'])
-        plt.set_title("Number of trades occured")
-        plt.xticks(rotation=25)
-        plt.savefig("./datafiles/test.png")
-        await ctx.send(file=image)
-        
-    @commands.command()
-    async def dailyperchange(self, ctx, arg, datee):
-        image=discord.File("./datafiles/test.png")
-        result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        # result=result['Close']/result['Close'].shift(1) -1
-        result.reset_index(level=['Date'], inplace=True)
-        result['Return']=result['Close'].pct_change(1)
+#     @commands.command()
+#     async def perdelivery(self, ctx, arg, datee):
+#         image=discord.File("./datafiles/test.png")
+#         delivery=quandl.get(f'BSE/BOM{arg}.10', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+#         delivery.reset_index(level=['Date'], inplace=True)
 
-        plt.bar(result['Date'], result['Return'])
-        plt.set_title("Daily percentage change of Stock Price")
-        plt.xticks(rotation=25)
-        plt.savefig("./datafiles/test.png")
-        await ctx.send(file=image)
+#         trades=quandl.get(f'BSE/BOM{arg}.7', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+#         trades.reset_index(level=['Date'], inplace=True)
+
+#         fig, axis=plt.subplots(2)
+#         axis[0].bar(trades['Date'], trades['No. of Trades'])
+#         axis[0].set_title("Number of trades occured")
+
+#         axis[1].bar(delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
+#         axis[1].set_title("% Delivery Qty to Traded Qty")
+
+#         plt.tight_layout(1)
+#         plt.xticks(rotation=25)
+#         plt.savefig("./datafiles/test.png")
+#         plt.close()
+#         await ctx.send(file=image)
+
+#     @commands.command()
+#     async def dailyperchange(self, ctx, arg, datee):
+#         image=discord.File("./datafiles/test.png")
+#         result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+#         # result=result['Close']/result['Close'].shift(1) -1
+#         result.reset_index(level=['Date'], inplace=True)
+#         result['Return']=result['Close'].pct_change(1)
+
+#         fig, axis=plt.subplots(2)
+#         axis[0].bar(result['Date'], result['Return'])
+#         axis[0].set_title("Daily percentage change Bar-graph")
+
+#         axis[1].hist(result['Return'], bins=100)
+#         axis[1].set_title("Histogram")
+
+#         plt.tight_layout(1)
+#         plt.xticks(rotation=25)
+#         plt.savefig("./datafiles/test.png")
+#         plt.close()
+#         await ctx.send("Letz check the votality of stock!",file=image)
 
     @commands.command()
     async def cumulativereturn(self, ctx, arg, datee):
