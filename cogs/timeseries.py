@@ -78,7 +78,7 @@ class callCharts(commands.Cog):
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test2.png")
         plt.close()
-        await ctx.send(file=image, file=image2)
+        await ctx.send(file=image,image2)
 
     @commands.command()
     async def dailyperchange(self, ctx, arg, datee):
