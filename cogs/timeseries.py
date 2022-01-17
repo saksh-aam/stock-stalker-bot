@@ -24,11 +24,11 @@ class callCharts(commands.Cog):
     async def chart(self, ctx, arg, datee):
         image=discord.File("./datafiles/test.png")
         result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        result['Return']=result['Close'].pct_change(1)
-        result['Cumulative']=(1+result['Return']).cumprod()
         plt.plot(result)
         plt.savefig("./datafiles/test.png")
         plt.close()
+        result['Return']=result['Close'].pct_change(1)
+        result['Cumulative']=(1+result['Return']).cumprod()
         cumreturns=result['Cumulative'].iloc[-1]
         await ctx.send(f'You got {cumreturns:.2f}% of returns since {datee} from {arg}', file=image)
 
@@ -51,7 +51,6 @@ class callCharts(commands.Cog):
         plt.set_title("Number of Shares traded")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
-        plt.close()
         await ctx.send("Plot of number of {arg} Shares Traded per day from {datee} till date:",file=image)
         
     @commands.command()
@@ -64,7 +63,6 @@ class callCharts(commands.Cog):
         plt.set_title("% Delivery Qty to Traded Qty")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test2.png")
-        plt.close()
         await ctx.send(file=image)
     
     @commands.command()
@@ -77,7 +75,6 @@ class callCharts(commands.Cog):
         plt.set_title("Number of trades occured")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
-        plt.close()
         await ctx.send(file=image)
         
     @commands.command()
@@ -92,21 +89,20 @@ class callCharts(commands.Cog):
         plt.set_title("Daily percentage change of Stock Price")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
-        plt.close()
         await ctx.send(file=image)
 
-#     @commands.command()
-#     async def cumulativereturn(self, ctx, arg, datee):
-#         image=discord.File("./datafiles/test.png")
-#         result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-#         result['Return']=result['Close'].pct_change(1)
-#         result['Cumulative']=(1+result['Return']).cumprod()
-#         plt.plot(result['Cumulative'])
-#         plt.xticks(rotation=25)
-#         plt.savefig("./datafiles/test.png")
-#         plt.close()
-#         cumreturns=result['Cumulative'].iloc[-1]
-#         await ctx.send(f'You got {cumreturns:.2f}% of returns since {datee} from {arg}',  file=image)
+    @commands.command()
+    async def cumulativereturn(self, ctx, arg, datee):
+        image=discord.File("./datafiles/test.png")
+        result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+        result['Return']=result['Close'].pct_change(1)
+        result['Cumulative']=(1+result['Return']).cumprod()
+        plt.plot(result['Cumulative'])
+        plt.xticks(rotation=25)
+        plt.savefig("./datafiles/test.png")
+        plt.close()
+        cumreturns=result['Cumulative'].iloc[-1]
+        await ctx.send(f'You got {cumreturns:.2f}% of returns since {datee} from {arg}',  file=image)
 
     @commands.command()
     async def indices(self, ctx):
