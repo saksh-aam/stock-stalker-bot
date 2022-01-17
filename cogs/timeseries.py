@@ -49,7 +49,7 @@ class callCharts(commands.Cog):
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
         plt.close()
-        await ctx.send("Plot of number of {arg} Shares Traded per day from {datee} till date:"file=image)
+        await ctx.send("Plot of number of {arg} Shares Traded per day from {datee} till date:",file=image)
         
     @commands.command()
     async def perdelivery(self, ctx, arg, datee):
@@ -90,7 +90,7 @@ class callCharts(commands.Cog):
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
         plt.close()
-        await ctx.send(ile=image)
+        await ctx.send(file=image)
 
     @commands.command()
     async def cumulativereturn(self, ctx, arg, datee):
