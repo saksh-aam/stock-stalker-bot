@@ -39,47 +39,44 @@ class callCharts(commands.Cog):
         await ctx.send(file=image)
 
     @commands.command()
-    async def volume(self, ctx, arg, datee):
+    async def volumeshares(self, ctx, arg, datee):
         image=discord.File("./datafiles/test.png")
         shares=quandl.get(f'BSE/BOM{arg}.6', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         shares.reset_index(level=['Date'], inplace=True)
-        trades=quandl.get(f'BSE/BOM{arg}.7', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        trades.reset_index(level=['Date'], inplace=True)
 
-        fig, axis=plt.subplots(2)
-        axis[0].bar(shares['Date'], shares['No. of Shares'])
-        axis[0].set_title("Number of Shares traded")
-
-        axis[1].bar(trades['Date'], trades['No. of Trades'])
-        axis[1].set_title("Number of trades occured")
-        plt.subplot_tool()
+        plt.bar(shares['Date'], shares['No. of Shares'])
+        plt.set_title("Number of Shares traded")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
         plt.close()
-        await ctx.send(file=image)
+        await ctx.send("Plot of number of {arg} Shares Traded per day from {datee} till date:"file=image)
         
     @commands.command()
     async def perdelivery(self, ctx, arg, datee):
         image=discord.File("./datafiles/test.png")
-        image2=discord.File("./datafiles/test2.png")
         delivery=quandl.get(f'BSE/BOM{arg}.10', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         delivery.reset_index(level=['Date'], inplace=True)
-
-        trades=quandl.get(f'BSE/BOM{arg}.7', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        trades.reset_index(level=['Date'], inplace=True)
-
-        plt.bar(trades['Date'], trades['No. of Trades'])
-        plt.set_title("Number of trades occured")
-        plt.xticks(rotation=25)
-        plt.savefig("./datafiles/test.png")
-        plt.close()
+        
         plt.bar(delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
         plt.set_title("% Delivery Qty to Traded Qty")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test2.png")
         plt.close()
-        await ctx.send(file=image,image2)
-
+        await ctx.send(file=image)
+    
+    @commands.command()
+    async def numtrades(self, ctx, arg, datee):
+        image=discord.File("./datafiles.test.png")
+        trades=quandl.get(f'BSE/BOM{arg}.7', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+        trades.reset_index(level=['Date'], inplace=True)
+        
+        plt.bar(trades['Date'], trades['No. of Trades'])
+        plt.set_title("Number of trades occured")
+        plt.xticks(rotation=25)
+        plt.savefig("./datafiles/test.png")
+        plt.close()
+        await ctx.send(file=image)
+        
     @commands.command()
     async def dailyperchange(self, ctx, arg, datee):
         image=discord.File("./datafiles/test.png")
@@ -88,18 +85,12 @@ class callCharts(commands.Cog):
         result.reset_index(level=['Date'], inplace=True)
         result['Return']=result['Close'].pct_change(1)
 
-        fig, axis=plt.subplots(2)
-        axis[0].bar(result['Date'], result['Return'])
-        axis[0].set_title("Daily percentage change Bar-graph")
-
-        axis[1].hist(result['Return'], bins=100)
-        axis[1].set_title("Histogram")
-
-        plt.tight_layout(1)
+        plt.bar(result['Date'], result['Return'])
+        plt.set_title("Daily percentage change of Stock Price")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
         plt.close()
-        await ctx.send("Letz check the votality of stock!",file=image)
+        await ctx.send(ile=image)
 
     @commands.command()
     async def cumulativereturn(self, ctx, arg, datee):
