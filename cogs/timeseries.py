@@ -52,7 +52,7 @@ class callCharts(commands.Cog):
 
         axis[1].bar(trades['Date'], trades['No. of Trades'])
         axis[1].set_title("Number of trades occured")
-        plt.tight_layout(1)
+        plt.subplot_tool()
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
         plt.close()
@@ -74,7 +74,7 @@ class callCharts(commands.Cog):
         axis[1].bar(delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
         axis[1].set_title("% Delivery Qty to Traded Qty")
 
-        plt.tight_layout(1)
+        plt.subplot_tool()
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
         plt.close()
