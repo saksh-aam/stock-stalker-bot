@@ -47,7 +47,7 @@ class callCharts(commands.Cog):
         shares=quandl.get(f'BSE/BOM{arg}.6', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         shares.reset_index(level=['Date'], inplace=True)
 
-        plt(kind=bar, shares['Date'], shares['No. of Shares'])
+        plt.bar(shares['Date'], shares['No. of Shares'])
         plt.set_title("Number of Shares traded")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
@@ -60,7 +60,7 @@ class callCharts(commands.Cog):
         delivery=quandl.get(f'BSE/BOM{arg}.10', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         delivery.reset_index(level=['Date'], inplace=True)
         
-        plt(kind=bar, delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
+        plt.bar(delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
         plt.set_title("% Delivery Qty to Traded Qty")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test2.png")
@@ -73,7 +73,7 @@ class callCharts(commands.Cog):
         trades=quandl.get(f'BSE/BOM{arg}.7', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         trades.reset_index(level=['Date'], inplace=True)
         
-        plt(kind=bar, trades['Date'], trades['No. of Trades'])
+        plt.bar(trades['Date'], trades['No. of Trades'])
         plt.set_title("Number of trades occured")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
@@ -88,7 +88,7 @@ class callCharts(commands.Cog):
         result.reset_index(level=['Date'], inplace=True)
         result['Return']=result['Close'].pct_change(1)
 
-        plt(kind=bar, result['Date'], result['Return'])
+        plt.bar(result['Date'], result['Return'])
         plt.set_title("Daily percentage change of Stock Price")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
