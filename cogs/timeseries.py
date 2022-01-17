@@ -24,10 +24,13 @@ class callCharts(commands.Cog):
     async def chart(self, ctx, arg, datee):
         image=discord.File("./datafiles/test.png")
         result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+        result['Return']=result['Close'].pct_change(1)
+        result['Cumulative']=(1+result['Return']).cumprod()
         plt.plot(result)
         plt.savefig("./datafiles/test.png")
         plt.close()
-        await ctx.send(file=image)
+        cumreturns=result['Cumulative'].iloc[-1]
+        await ctx.send(f'You got {cumreturns:.2f}% of returns since {datee} from {arg}', file=image)
 
     @commands.command()
     async def stockcandle(self, ctx, arg, datee, mavg=2):
@@ -44,7 +47,7 @@ class callCharts(commands.Cog):
         shares=quandl.get(f'BSE/BOM{arg}.6', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         shares.reset_index(level=['Date'], inplace=True)
 
-        plt.bar(shares['Date'], shares['No. of Shares'])
+        plt(kind=bar, shares['Date'], shares['No. of Shares'])
         plt.set_title("Number of Shares traded")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
@@ -57,7 +60,7 @@ class callCharts(commands.Cog):
         delivery=quandl.get(f'BSE/BOM{arg}.10', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         delivery.reset_index(level=['Date'], inplace=True)
         
-        plt.bar(delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
+        plt(kind=bar, delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
         plt.set_title("% Delivery Qty to Traded Qty")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test2.png")
@@ -70,7 +73,7 @@ class callCharts(commands.Cog):
         trades=quandl.get(f'BSE/BOM{arg}.7', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         trades.reset_index(level=['Date'], inplace=True)
         
-        plt.bar(trades['Date'], trades['No. of Trades'])
+        plt(kind=bar, trades['Date'], trades['No. of Trades'])
         plt.set_title("Number of trades occured")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
@@ -85,25 +88,25 @@ class callCharts(commands.Cog):
         result.reset_index(level=['Date'], inplace=True)
         result['Return']=result['Close'].pct_change(1)
 
-        plt.bar(result['Date'], result['Return'])
+        plt(kind=bar, result['Date'], result['Return'])
         plt.set_title("Daily percentage change of Stock Price")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
         plt.close()
         await ctx.send(file=image)
 
-    @commands.command()
-    async def cumulativereturn(self, ctx, arg, datee):
-        image=discord.File("./datafiles/test.png")
-        result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
-        result['Return']=result['Close'].pct_change(1)
-        result['Cumulative']=(1+result['Return']).cumprod()
-        plt.plot(result['Cumulative'])
-        plt.xticks(rotation=25)
-        plt.savefig("./datafiles/test.png")
-        plt.close()
-        cumreturns=result['Cumulative'].iloc[-1]
-        await ctx.send(f'You got {cumreturns:.2f}% of returns since {datee} from {arg}',  file=image)
+#     @commands.command()
+#     async def cumulativereturn(self, ctx, arg, datee):
+#         image=discord.File("./datafiles/test.png")
+#         result=quandl.get(f'BSE/BOM{arg}.4', start_date=datetime.strptime(datee, format_date), end_date=date.today())
+#         result['Return']=result['Close'].pct_change(1)
+#         result['Cumulative']=(1+result['Return']).cumprod()
+#         plt.plot(result['Cumulative'])
+#         plt.xticks(rotation=25)
+#         plt.savefig("./datafiles/test.png")
+#         plt.close()
+#         cumreturns=result['Cumulative'].iloc[-1]
+#         await ctx.send(f'You got {cumreturns:.2f}% of returns since {datee} from {arg}',  file=image)
 
     @commands.command()
     async def indices(self, ctx):
