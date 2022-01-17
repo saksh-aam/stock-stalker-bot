@@ -48,10 +48,10 @@ class callCharts(commands.Cog):
 
         fig, axis=plt.subplots(2)
         axis[0].bar(shares['Date'], shares['No. of Shares'])
-        axis[0].set_title.set_text("Number of Shares traded")
+        axis[0].set_title("Number of Shares traded")
 
         axis[1].bar(trades['Date'], trades['No. of Trades'])
-        axis[1].set_title.set_text("Number of trades occured")
+        axis[1].set_title("Number of trades occured")
         plt.subplot_tool()
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
@@ -61,24 +61,24 @@ class callCharts(commands.Cog):
     @commands.command()
     async def perdelivery(self, ctx, arg, datee):
         image=discord.File("./datafiles/test.png")
+        image2=discord.File("./datafiles/test2.png")
         delivery=quandl.get(f'BSE/BOM{arg}.10', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         delivery.reset_index(level=['Date'], inplace=True)
 
         trades=quandl.get(f'BSE/BOM{arg}.7', start_date=datetime.strptime(datee, format_date), end_date=date.today())
         trades.reset_index(level=['Date'], inplace=True)
 
-        fig, axis=plt.subplots(2)
-        axis[0].bar(trades['Date'], trades['No. of Trades'])
-        axis[0].set_title("Number of trades occured")
-
-        axis[1].bar(delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
-        axis[1].set_title("% Delivery Qty to Traded Qty")
-
-        plt.subplot_tool()
+        plt.bar(trades['Date'], trades['No. of Trades'])
+        plt.set_title("Number of trades occured")
         plt.xticks(rotation=25)
         plt.savefig("./datafiles/test.png")
         plt.close()
-        await ctx.send(file=image)
+        plt.bar(delivery['Date'], delivery['% Deli. Qty to Traded Qty'])
+        plt.set_title("% Delivery Qty to Traded Qty")
+        plt.xticks(rotation=25)
+        plt.savefig("./datafiles/test2.png")
+        plt.close()
+        await ctx.send(file=image, file=image2)
 
     @commands.command()
     async def dailyperchange(self, ctx, arg, datee):
@@ -90,10 +90,10 @@ class callCharts(commands.Cog):
 
         fig, axis=plt.subplots(2)
         axis[0].bar(result['Date'], result['Return'])
-        axis[0].set_title.set_text("Daily percentage change Bar-graph")
+        axis[0].set_title("Daily percentage change Bar-graph")
 
         axis[1].hist(result['Return'], bins=100)
-        axis[1].set_title.set_text("Histogram")
+        axis[1].set_title("Histogram")
 
         plt.tight_layout(1)
         plt.xticks(rotation=25)
